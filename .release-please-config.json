@@ -1,0 +1,9 @@
+{
+  "packages": {
+    ".": {
+      "release-type": "node",
+      "package-name": "bling-ha-tile-library",
+      "extra-files": ["hacs.json"]
+    }
+  }
+}
