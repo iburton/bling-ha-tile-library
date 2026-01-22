@@ -24,6 +24,19 @@ entity: sensor.living_room_temperature
 greeting: Hello from Bling!
 ```
 
+#### Bling High Value Power Tile
+Configure this tile using the UI editor (recommended). Optional YAML:
+```
+type: custom:bling-high-value-power-tile
+name: High Value Consumer
+current_entity: sensor.panel_power
+week_entity: sensor.panel_energy_week
+month_entity: sensor.panel_energy_month
+year_entity: sensor.panel_energy_year
+threshold: 500
+icon: mdi:flash
+```
+
 ### Development
 ```
 npm install
