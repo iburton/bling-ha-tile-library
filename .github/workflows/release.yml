@@ -60,8 +60,6 @@ jobs:
           release-type: node
           config-file: .release-please-config.json
           manifest-file: .release-please-manifest.json
-          prerelease: true
-          prerelease-type: beta
 
       - name: Checkout
         if: steps.release.outputs.release_created == 'true'
