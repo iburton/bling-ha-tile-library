@@ -6,4 +6,5 @@ export interface BlingHelloTileConfig extends BlingTileConfig {
   icon?: string;
   show_entity_name?: boolean;
   show_last_changed?: boolean;
+  state_prefix?: string;
 }

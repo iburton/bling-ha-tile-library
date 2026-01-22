@@ -45,6 +45,8 @@ export class BlingHelloTile extends LitElement {
       lastChanged && this.hass
         ? new Date(lastChanged).toLocaleString()
         : "unknown";
+    const statePrefix = this.config.state_prefix ?? "";
+    const stateLabel = statePrefix ? `${statePrefix} ${entityState}` : entityState;
 
     return html`
       <ha-card>
@@ -57,7 +59,7 @@ export class BlingHelloTile extends LitElement {
           ${showEntityName
             ? html`<div class="entity">${entityName}</div>`
             : html``}
-          <div class="state">${entityState}</div>
+          <div class="state">${stateLabel}</div>
           ${entityId && showLastChanged
             ? html`<div class="updated">Updated ${lastChangedLabel}</div>`
             : html``}
