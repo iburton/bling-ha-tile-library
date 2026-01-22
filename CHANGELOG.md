@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/iburton/bling-ha-tile-library/compare/v1.0.0...v1.1.0) (2026-01-22)
+
+
+### Features
+
+* Add Power Consumer tile ([71315f5](https://github.com/iburton/bling-ha-tile-library/commit/71315f57821c4deed0882e2eb21e5f8da01e932e))
+
 ## 1.0.0 (2026-01-22)
 
 
