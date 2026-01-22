@@ -35,8 +35,16 @@ export class BlingHelloTile extends LitElement {
       entityId && this.hass?.states[entityId]?.attributes?.friendly_name
         ? this.hass.states[entityId].attributes.friendly_name
         : entityId ?? "No entity selected";
+    const lastChanged = entityId
+      ? this.hass?.states[entityId]?.last_changed ?? null
+      : null;
     const icon = this.config.icon ?? "mdi:party-popper";
     const showEntityName = this.config.show_entity_name ?? true;
+    const showLastChanged = this.config.show_last_changed ?? true;
+    const lastChangedLabel =
+      lastChanged && this.hass
+        ? new Date(lastChanged).toLocaleString()
+        : "unknown";
 
     return html`
       <ha-card>
@@ -50,6 +58,9 @@ export class BlingHelloTile extends LitElement {
             ? html`<div class="entity">${entityName}</div>`
             : html``}
           <div class="state">${entityState}</div>
+          ${entityId && showLastChanged
+            ? html`<div class="updated">Updated ${lastChangedLabel}</div>`
+            : html``}
         </div>
       </ha-card>
     `;
@@ -96,6 +107,12 @@ export class BlingHelloTile extends LitElement {
     .state {
       color: var(--secondary-text-color);
       font-size: 12px;
+    }
+
+    .updated {
+      color: var(--secondary-text-color);
+      font-size: 11px;
+      margin-top: 6px;
     }
   `;
 }
