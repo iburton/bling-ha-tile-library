@@ -47,6 +47,7 @@ export class BlingHelloTile extends LitElement {
         : "unknown";
     const statePrefix = this.config.state_prefix ?? "";
     const stateLabel = statePrefix ? `${statePrefix} ${entityState}` : entityState;
+    const stateBadge = this.config.state_badge ?? false;
 
     return html`
       <ha-card>
@@ -59,7 +60,9 @@ export class BlingHelloTile extends LitElement {
           ${showEntityName
             ? html`<div class="entity">${entityName}</div>`
             : html``}
-          <div class="state">${stateLabel}</div>
+          <div class=${stateBadge ? "state state--badge" : "state"}>
+            ${stateLabel}
+          </div>
           ${entityId && showLastChanged
             ? html`<div class="updated">Updated ${lastChangedLabel}</div>`
             : html``}
@@ -109,6 +112,14 @@ export class BlingHelloTile extends LitElement {
     .state {
       color: var(--secondary-text-color);
       font-size: 12px;
+    }
+
+    .state--badge {
+      background: var(--secondary-background-color);
+      border-radius: 999px;
+      display: inline-block;
+      padding: 2px 8px;
+      width: fit-content;
     }
 
     .updated {
