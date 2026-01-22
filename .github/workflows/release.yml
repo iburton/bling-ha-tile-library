@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - main_dev
 
 permissions:
   contents: write
@@ -11,6 +12,7 @@ permissions:
 
 jobs:
   release:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - name: Release Please
@@ -21,6 +23,47 @@ jobs:
           package-name: bling-ha-tile-library
           config-file: .release-please-config.json
           manifest-file: .release-please-manifest.json
+
+      - name: Checkout
+        if: steps.release.outputs.release_created == 'true'
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        if: steps.release.outputs.release_created == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install
+        if: steps.release.outputs.release_created == 'true'
+        run: npm ci
+
+      - name: Build
+        if: steps.release.outputs.release_created == 'true'
+        run: npm run build
+
+      - name: Upload release asset
+        if: steps.release.outputs.release_created == 'true'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.release.outputs.tag_name }}
+          files: dist/bling-ha-tile-library.js
+
+  release_beta:
+    if: github.ref == 'refs/heads/main_dev'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Release Please (Beta)
+        id: release
+        uses: googleapis/release-please-action@v4
+        with:
+          release-type: node
+          package-name: bling-ha-tile-library
+          config-file: .release-please-config.json
+          manifest-file: .release-please-manifest.json
+          prerelease: true
+          prerelease-type: beta
 
       - name: Checkout
         if: steps.release.outputs.release_created == 'true'
